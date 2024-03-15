@@ -1,0 +1,373 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml;
+using Electroimpact;
+namespace TestLinearAlgebra
+{
+	public partial class frmTestIt : Form
+	{
+
+		private Electroimpact.Machine.cMachine myMachine;
+    private Electroimpact.FANUC.OpenCNC CNC;
+		
+		public frmTestIt()
+		{
+			InitializeComponent();
+
+      this.txtMachinePos.Leave += new EventHandler(txtMachinePos_Leave);
+		}
+
+    private void frmTestIt_Load(object sender, EventArgs e)
+    {
+      Electroimpact.FileIO.cFileOther cf = new Electroimpact.FileIO.cFileOther();
+      string FileName = cf.CurrentFolder();
+      FileName += "Data\\machine.config.xml";
+      if (!ReadFile(FileName))
+        base.Close();
+      else
+      {
+        int AxisNum = myMachine.GetAxisNames().Length;
+        txtMachinePos.Text = "0";
+        for (int ii = 0; ii < AxisNum - 1; ii++)
+          txtMachinePos.Text += ",0";
+        this.txtMachinePos_Leave(null, null);
+        string[] vars = this.myMachine.GetAttributeNames();
+        for (int ii = 0; ii < vars.Length; ii++)
+          this.listBox1.Items.Add(vars[ii]);
+        string[] comps = this.myMachine.CompTableVariableNames;
+        for (int ii = 0; ii < comps.Length; ii++)
+          this.listBox2.Items.Add(comps[ii]);
+        this.myMachine.CompTableOverride = true;
+      }
+      double Xdog = .0;
+      System.DateTime start = System.DateTime.Now;
+      for (int ii = 0; ii < 100000; ii++)
+      {
+        myMachine.WriteAxisPosition("Xm", (double)ii);
+        Xdog = myMachine.X;
+      }
+      TimeSpan ts = System.DateTime.Now - start;
+      MessageBox.Show(ts.TotalMilliseconds.ToString("F3"));
+      Application.Exit();
+    }
+
+    #region Interface Stuff
+    void txtMachinePos_Leave(object sender, EventArgs e)
+    {
+      //return;
+      Console.WriteLine("\n\nNew Data...");
+      string[] MachinePosition = txtMachinePos.Text.Split(',');
+      double[] mPos = new double[MachinePosition.Length];
+
+      string[] axisnames = myMachine.GetAxisNames();
+
+      this.lblMAxisNames.Text = "Machine Axes: ";
+      for (int ii = 0; ii < axisnames.Length; ii++)
+      {
+        this.lblMAxisNames.Text += " " + axisnames[ii];
+      }
+
+      for (int ii = 0; ii < MachinePosition.Length; ii++)
+      {
+        mPos[ii] = Double.TryParse(MachinePosition[ii], out mPos[ii]) ? mPos[ii] : 0.0;
+      }
+
+      if (axisnames.Length != MachinePosition.Length)
+      {
+        MessageBox.Show("Mismatch between Axis values text count and actual machine axis names count. There are " + axisnames.Length.ToString() + " machine axes.  Try again");
+        return;
+      }
+
+      for (int ii = 0; ii < axisnames.Length; ii++)
+        myMachine.WriteAxisPosition(axisnames[ii], mPos[ii]);
+      UpdateToolPoint();
+      return;
+    }
+
+    class cMA
+    {
+      public double x = double.NaN;
+      public double y = double.NaN;
+      public double u = double.NaN;
+      public double a = double.NaN;
+      public double b = double.NaN;
+      public double ufly = double.NaN;
+      public double z = double.NaN;
+      public double j1 = double.NaN;
+      public double j2 = double.NaN;
+      public double j3 = double.NaN;
+      public double j4 = double.NaN;
+      public double j5 = double.NaN;
+      public double j6 = double.NaN;
+      public double tj1 = double.NaN;
+      public double tj2 = double.NaN;
+      public double tj3 = double.NaN;
+      public double tj4 = double.NaN;
+      public cMA()
+      {
+      }
+
+      public bool IsValid
+      {
+        get
+        {
+          return !double.IsNaN(x) &&
+                 !double.IsNaN(y) &&
+                 !double.IsNaN(u) &&
+                 !double.IsNaN(a) &&
+                 !double.IsNaN(b) &&
+                 (!double.IsNaN(ufly) || !double.IsNaN(z));
+        }
+      }
+    }
+    class cTP
+    {
+      public double x;
+      public double y;
+      public double z = 1000.0;
+      public double a;
+      public double b;
+      public double c;
+      public double ufly;
+    }
+    cTP myTP = new cTP();
+    private void MachineToRectangularWithUfly(cMA MAin, out cTP TPout)
+    {
+      if (double.IsNaN(MAin.ufly))
+      {
+        MAin.ufly = 0.0;
+        for (int ii = 0; ii < 100; ii++)
+        {
+          myMachine.WriteAxisPosition("Xm", MAin.x);
+          myMachine.WriteAxisPosition("Ym", MAin.y);
+          myMachine.WriteAxisPosition("Zm", MAin.u);
+          myMachine.WriteAxisPosition("Am", MAin.a);
+          myMachine.WriteAxisPosition("Bm", MAin.b);
+          myMachine.WriteAxisPosition("Cm", MAin.ufly);
+
+          double zerr = MAin.z - myMachine.Z;
+
+          MAin.ufly += zerr;
+
+          if (Math.Abs(zerr) < .0005)
+            break;
+        }
+      }
+      else
+      {
+        myMachine.WriteAxisPosition("Xm", MAin.x);
+        myMachine.WriteAxisPosition("Ym", MAin.y);
+        myMachine.WriteAxisPosition("Zm", MAin.u);
+        myMachine.WriteAxisPosition("Am", MAin.a);
+        myMachine.WriteAxisPosition("Bm", MAin.b);
+        myMachine.WriteAxisPosition("Cm", MAin.ufly);
+      }
+      cTP tp = new cTP();
+      tp.x = myMachine.X;
+      tp.y = myMachine.Y;
+      tp.z = myMachine.Z;
+      tp.a = myMachine.A;
+      tp.b = myMachine.B;
+      tp.c = myMachine.C[0];
+      tp.ufly = MAin.ufly;
+      TPout = tp;
+    }
+
+    /// <summary>
+    /// MA must have the current axis positions or zero.
+    /// </summary>
+    /// <param name="TPin"></param>
+    /// <param name="MAout"></param>
+    private void RectangularToMachineWithUfly(cTP TPin, cMA MAout)
+    {
+      MAout.ufly = TPin.ufly;
+      for (int ii = 0; ii < 100; ii++)
+      {
+        myMachine.WriteAxisPosition("Xm", MAout.x);
+        myMachine.WriteAxisPosition("Ym", MAout.y);
+        myMachine.WriteAxisPosition("Zm", MAout.u);
+        myMachine.WriteAxisPosition("Am", MAout.a);
+        myMachine.WriteAxisPosition("Bm", MAout.b);
+        myMachine.WriteAxisPosition("Cm", MAout.ufly);
+
+        double xerr = TPin.x - myMachine.X;
+        double yerr = TPin.y - myMachine.Y;
+        double zerr = TPin.z - myMachine.Z;
+        double aerr = TPin.a - myMachine.A;
+        double berr = TPin.b - myMachine.B;
+
+        MAout.x += xerr;
+        MAout.y += yerr;
+        MAout.u += zerr;
+        MAout.a += aerr;
+        MAout.b += berr;
+
+        double linerr = Math.Sqrt(xerr * xerr + yerr * yerr + zerr * zerr);
+        double roterr = Math.Sqrt(aerr * aerr + berr * berr);
+        if (linerr < .0005 && roterr < .0005)
+          break;
+      }
+      //Write the last best guess before updating the display
+      myMachine.WriteAxisPosition("Xm", MAout.x);
+      myMachine.WriteAxisPosition("Ym", MAout.y);
+      myMachine.WriteAxisPosition("Zm", MAout.u);
+      myMachine.WriteAxisPosition("Am", MAout.a);
+      myMachine.WriteAxisPosition("Bm", MAout.b);
+      myMachine.WriteAxisPosition("Cm", MAout.ufly);
+      return;
+    }
+
+		private bool ReadFile(string FileName)
+		{
+			this.myMachine = new Electroimpact.Machine.cMachine(FileName, true);
+			return this.myMachine.IsHookedUp;
+		}
+
+		private void UpdateToolPoint()
+		{
+      this.lstTP.Items.Clear();
+      this.lstTP.Items.Add("X: " + myMachine.X.ToString("F4"));
+      this.lstTP.Items.Add("Y: " + myMachine.Y.ToString("F4"));
+      this.lstTP.Items.Add("Z: " + myMachine.Z.ToString("F4"));
+      this.lstTP.Items.Add("A: " + myMachine.A.ToString("F4"));
+      this.lstTP.Items.Add("B: " + myMachine.B.ToString("F4"));
+      this.lstTP.Items.Add("C: " + myMachine.C[0].ToString("F4"));
+
+      this.lstMpos.Items.Clear();
+
+      string[] axnames = myMachine.GetAxisNames();
+      for (int ii = 0; ii < axnames.Length; ii++)
+      {
+        this.lstMpos.Items.Add(axnames[ii] + ": " + myMachine.GetAxisPostion(axnames[ii]).ToString("F4"));
+      }
+    }
+
+    private void btnSaveIt_Click(object sender, EventArgs e)
+    {
+      Electroimpact.FileIO.cFileOther cf = new Electroimpact.FileIO.cFileOther();
+      string FileName = cf.CurrentFolder();
+      FileName += "Data\\machine.config.xml";
+      myMachine.ToFile(FileName, false);
+    }
+
+    private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      string s = (string)this.listBox1.Items[this.listBox1.SelectedIndex];
+      this.myTips.SetToolTip(this.listBox1, s + ": " + this.myMachine.ReadAttribute(s));
+      this.textBox1.Text = this.myMachine.ReadAttribute(s).ToString("F4");
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+      string s = (string)this.listBox1.Items[this.listBox1.SelectedIndex];
+      double val = double.TryParse(this.textBox1.Text, out val) ? val : this.myMachine.ReadAttribute(s);
+      this.myMachine.WriteAttribute(s, val);
+      this.txtMachinePos_Leave(null, null);
+    }
+
+    private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      string s = (string)this.listBox2.Items[this.listBox2.SelectedIndex];
+      double val = this.myMachine.ReadAttribute(s);
+      this.myTips.SetToolTip(this.listBox2, s + ": " + val.ToString("F4"));
+      this.textBox2.Text = val.ToString("F4");
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+      string s = (string)this.listBox2.Items[this.listBox2.SelectedIndex];
+      double val = double.TryParse(textBox2.Text, out val) ? val : this.myMachine.ReadAttribute(s);
+      this.myMachine.WriteAttribute(s, val);
+      this.txtMachinePos_Leave(null, null);
+    }
+
+    private void chkConnectToCNC_CheckedChanged(object sender, EventArgs e)
+    {
+      if (chkConnectToCNC.Checked)
+      {
+        string addr = Microsoft.VisualBasic.Interaction.InputBox("Input CNC Address", "CNC Address Gitter", null, -1, -1);
+        if (addr != null)
+        {
+          Electroimpact.FANUC.Err_Code error;
+          CNC = new Electroimpact.FANUC.OpenCNC(addr, out error);
+          if (CNC.Connected)
+            tmrLookAtCNC.Enabled = true;
+        }
+      }
+      else
+      {
+        tmrLookAtCNC.Enabled = false;
+      }
+    }
+
+    private void tmrLookAtCNC_Tick(object sender, EventArgs e)
+    {
+      Electroimpact.FANUC.Err_Code error;
+      int[] positions = CNC.ReadPMCRange("R1860*4*6", out error);
+
+      if( positions.Length == 6 && error == Electroimpact.FANUC.Err_Code.EW_OK )
+      {
+        string text = ((double)positions[0] / 1000.0).ToString("F3") + "," +
+                                  ((double)positions[1] / 1000.0).ToString("F3") + "," +
+                                  ((double)positions[2] / 1000.0).ToString("F3") + "," +
+                                  ((double)positions[3] / 100000.0).ToString("F5") + "," +
+                                  ((double)positions[4] / 100000.0).ToString("F5") + "," +
+                                  ((double)positions[5] / 100000.0).ToString("F5");
+        if (text != txtMachinePos.Text)
+        {
+          txtMachinePos.Text = text;
+          this.txtMachinePos_Leave(null, null);
+        }
+      }
+    }
+
+    private void btnVarTogglePluss_Click(object sender, EventArgs e)
+    {
+      if (listBox1.SelectedIndex >= 0)
+      {
+        string s = (string)this.listBox1.Items[this.listBox1.SelectedIndex];
+        double cntVal = myMachine.ReadAttribute(s);
+        this.myMachine.WriteAttribute(s, cntVal + 5.0);
+        this.txtMachinePos_Leave(null, null);
+      }
+    }
+
+    private void btnVarToggleMinus_Click(object sender, EventArgs e)
+    {
+      if (listBox1.SelectedIndex >= 0)
+      {
+        string s = (string)this.listBox1.Items[this.listBox1.SelectedIndex];
+        double cntVal = myMachine.ReadAttribute(s);
+        this.myMachine.WriteAttribute(s, cntVal - 5.0);
+        this.txtMachinePos_Leave(null, null);
+      }
+    }
+
+    private void btnCompTogglePlus_Click(object sender, EventArgs e)
+    {
+      if (listBox2.SelectedIndex >= 0)
+      {
+        string s = (string)this.listBox2.Items[this.listBox2.SelectedIndex];
+        this.myMachine.WriteAttribute(s, 5.0);
+        this.txtMachinePos_Leave(null, null);
+      }
+    }
+
+    private void btnCompToggleMinus_Click(object sender, EventArgs e)
+    {
+      if (listBox2.SelectedIndex >= 0)
+      {
+        string s = (string)this.listBox2.Items[this.listBox2.SelectedIndex];
+        this.myMachine.WriteAttribute(s, 0.0);
+        this.txtMachinePos_Leave(null, null);
+      }
+    }
+    #endregion
+  }
+}
+

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Electroimpact.LinearAlgebra</id>
+    <version>$version$</version>
+    <title>Electroimpact.LinearAlgebra</title>
+    <authors>Todd Rudberg</authors>
+    <owners>Todd Rudberg</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>Linear Algebra</tags>
+  </metadata>
+</package>

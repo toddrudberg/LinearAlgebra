@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="LinearAlgebra">
+</Property><Property Name="Solution File" Value="D:\Todd\Projects\dotNetSolutions\LinearAlgebra\LinearAlgebra.sln">
+</Property><Property Name="User Options File" Value="D:\Todd\Projects\dotNetSolutions\LinearAlgebra\LinearAlgebra.suo">
+</Property><Property Name="Date" Value="Wednesday, February 20, 2013">
+</Property><Property Name="Time" Value="14:36 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="LinearAlgebra.sln" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\LinearAlgebra.sln">
+</Event><Event ErrorLevel="0" Project="" Source="LinearAlgebra.suo" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\LinearAlgebra.suo">
+</Event><Event ErrorLevel="0" Project="LinearAlgebra" Source="LinearAlgebra.csproj" Description="Project file successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\LinearAlgebra.csproj">
+</Event><Event ErrorLevel="0" Project="LinearAlgebra" Source="cLinearAlgebra.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\cLinearAlgebra.cs">
+</Event><Event ErrorLevel="0" Project="LinearAlgebra" Source="IMachine.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\IMachine.cs">
+</Event><Event ErrorLevel="0" Project="LinearAlgebra" Source="LinearAlgebra.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="LinearAlgebra" Source="LinearAlgebra.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\TestLinearAlgebra.csproj" Description="Project file successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\TestLinearAlgebra.csproj">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\TestLinearAlgebra.csproj.user" Description="Project user file successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\TestLinearAlgebra.csproj.user">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\frmTestIT.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\frmTestIT.cs">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\frmTestIT.Designer.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\frmTestIT.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\Program.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\Program.cs">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\Properties\Resources.Designer.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\Properties\Settings.Designer.cs" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\Properties\Settings.settings" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\frmTestIT.resx" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\frmTestIT.resx">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\Properties\Resources.resx" Description="File successfully backed up as D:\Todd\Projects\dotNetSolutions\LinearAlgebra\Backup\TestLinearAlgebra\Properties\Resources.resx">
+</Event><Event ErrorLevel="1" Project="TestLinearAlgebra" Source="TestLinearAlgebra\TestLinearAlgebra.csproj" Description="Your project is targeting .NET Framework 2.0 or 3.0. If your project uses assemblies requiring a newer .NET Framework, your project will fail to build. You can change the .NET Framework version by clicking Properties on the project menu and then selecting a new version in the '.NET Framework' dropdown box. (In Visual Basic, this is located on the Compile tab by clicking the 'Advanced Compiler Options...' button.)">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\TestLinearAlgebra.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="TestLinearAlgebra" Source="TestLinearAlgebra\TestLinearAlgebra.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="LinearAlgebra.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="LinearAlgebra.sln" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TestLinearAlgebra" Source="TestLinearAlgebra\TestLinearAlgebra.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

@@ -1,0 +1,866 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LinearAlgebra</name>
+    </assembly>
+    <members>
+        <member name="M:Electroimpact.LinearAlgebra.ExtensionMethods.LeastSquaresPolynomial(System.Double[],System.Double[],System.Int32)">
+            <summary>
+            Calculates the coefficients of a polynomial_degree powered polynomial
+            
+            </summary>
+            <param name="x">The X values</param>
+            <param name="y">The Y values </param>
+            <param name="polynomial_degree">the order or polynomial degree</param>
+            <returns>an array of as long as the order, highest order coefficient first</returns>
+        </member>
+        <member name="F:Electroimpact.LinearAlgebra.c6DOF_Args.rX">
+            <summary>
+            rX is in Degrees because its readable.  This will bite me someday.
+            </summary>
+        </member>
+        <member name="F:Electroimpact.LinearAlgebra.c6DOF_Args.rY">
+            <summary>
+            rY is in Degrees because its readable.  This will bite me someday.
+            </summary>
+        </member>
+        <member name="F:Electroimpact.LinearAlgebra.c6DOF_Args.rZ">
+            <summary>
+            rZ is in Degrees because its readable.  This will bite me someday.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.Transforms">
+            <summary>
+            Transforms is a collection of 4x4 matricies.  
+            These matricies can be formed by using DHMatrix or RussMatrix or
+            whatever method you prefer.
+            
+            Calling DotProduct(), returns the dot product of all the matricies in this system
+            in the order they were added to the collection.
+            
+            This Class also has a CrossProduct(double[] a, double[] b) method.  
+            This returns a x b and is unrelated to the collection of matricies.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.CrossProduct(System.Double[],System.Double[])">
+            <summary>
+            Cross Product is unrelated to the collection of matricies in this 
+            class and merely returns the i, j, k scalers of the a x b function.
+            </summary>
+            <param name="a">a one dimensional double array of three elements.
+            a[0] = i scaler
+            a[1] = j scaler
+            a[2] = k scaler</param>
+            <param name="b">similar to a.</param>
+            <returns>a one dimensional double array of three elements.
+            [0] = i scaler
+            [1] = j scaler
+            [2] = k scaler.
+            This function does not normalize the vector</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.Normalize(System.Double[])">
+            <summary>
+            Normalizes a one dimensional matrix a
+            </summary>
+            <param name="a">a one dimensional double matrix</param>
+            <returns>a one dimensional double matrix with same number of elements as a</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.DotProduct(System.UInt32,System.UInt32)">
+            <summary>
+            Calculates the dot product of the collection of matricies in this 
+            class and returns the 4x4 result.
+            </summary>
+            <returns>Returns a double[4,4] matrix</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.DotProduct">
+            <summary>
+            Computes dotproduct of member 4x4 matrices
+            </summary>
+            <returns>double[4,4]</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.DotProduct(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            use for any 4x4 transform
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.DotProductLHT(System.Double[0:,0:],System.Double[0:,0:])">
+            <summary>
+            Use only with LHT transforms
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.AddTransform(System.Double[0:,0:])">
+            <summary>
+            Adds a 4x4 matrix to the collection of transforms in this class.
+            </summary>
+            <param name="iXform">a 4x4 double matrix</param>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Transforms.ModifyTransform(System.Int32,System.Double[0:,0:])">
+            <summary>
+            Copies the 4x4 matrix iXform into the location indicated by Element
+            which is an index into the collection of transforms in this class.
+            </summary>
+            <param name="Element">Integer element to modify.</param>
+            <param name="iXform">double[4,4] to change it to.</param>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.Transforms.Count">
+            <summary>
+            Returns the number of Transforms in this system.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cSquareMatrix.DotMe(System.Double[])">
+            <summary>
+            Dot Product of this matrix with single dimensional n element array of doubles.
+            </summary>
+            <param name="Rvector">single dimensional matrix that maches size of this matrix class of doubles</param>
+            <returns>Single dimensional n element array of doubles</returns>
+            
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.cMatrix">
+            <summary>
+            cMatrix is a 4x4 LHT matrix manipulator.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.aTan2(System.Double,System.Double)">
+            <summary>
+            Rutuns the angle of the vector composed of x and y as measured from the positive x axis going counter clockwise.
+            </summary>
+            <param name="x">component value of the vector from the axis which the angle is to be measured</param>
+            <param name="y">component value fo the vector from the axis orthoganal to the above axis</param>
+            <returns>double -- the angle.</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.DotMe(System.Double[])">
+            <summary>
+            Dot Product of this matrix with single dimensional 4 element array of doubles.
+            </summary>
+            <param name="Rvector">single dimensional 4 element array of doubles</param>
+            <returns>Single dimensional 4 element array of doubles</returns>
+            
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.DotMe(System.Double[0:,0:])">
+            <summary>
+            Multiplies the matrix class matrix x MatrixIn and returns the result (the dot product).
+            </summary>
+            <param name="MatrixIn">a 4x4 double, there is no error checking!</param>
+            <returns>a 4x4 double</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.DotMeLHT(System.Double[0:,0:])">
+            <summary>
+            Warning! assumed LHT matrix
+            Multiplies the matrix class matrix x MatrixIn and returns the result (the dot product).
+            </summary>
+            <param name="MatrixIn">a 4x4 double, there is no error checking!</param>
+            <returns>a 4x4 double</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.#ctor(System.Double[0:,0:])">
+            <summary>
+            Constructor requires a 4x4 matrix for input.
+            </summary>
+            <param name="M">a 4x4 double array</param>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.#ctor">
+            <summary>
+            Matrix will be the identity matrix.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.InvertMe">
+            <summary>
+            Only works for standard transfer matrix.
+            
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.InverseHomogeneous">
+            <summary>
+            Returns the 4x4 of the inverse matrix.  This works only for homegeneous matrices.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.GetTranspose">
+            <summary>
+            get the full transpose of this 4x4.  Solid works format is the transpose of the rest of the known universe's for instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.ToString">
+            <summary>
+            Returns string representing 4x4 array.  Units are unitless and mm.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.ToString(System.Boolean)">
+            <summary>
+            Returns string representing 4x4 array.  Units are unitless and mm.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.cMatrix.Normalize(System.Double[])">
+            <summary>
+            Normalizes a one dimensional matrix a
+            </summary>
+            <param name="a">a one dimensional double matrix</param>
+            <returns>a one dimensional double matrix with same number of elements as a</returns>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.X">
+            <summary>
+            Returns the 0,3 element of array or the tp.x
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.Y">
+            <summary>
+            return 1,3 element of array or the tp.y
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.Z">
+            <summary>
+            returns the 2,3 element of array or the tp.z
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.i">
+            <summary>
+            return one dimensional 3 element array representing i.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.j">
+            <summary>
+            return one dimensional 3 element array representing j.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.k">
+            <summary>
+            return one dimensional 3 element array representing k.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.A">
+            <summary>
+            Returns a two element double array, where: <br/>
+            A[0] = A in terms of 360 axis <br/>
+            A[1] = A in terms of a +/- axis.
+            Calculates the Atp Based on the k vector.  Units are degrees.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.rXrYrZFixedAngle">
+            <summary>
+            rXrYrZFixedAngle returns a double array. In DEGREES.
+            This is NOT the same as the old school ABC.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.rXrYrZ">
+            <summary>
+            rXrYrz returns a 3 x 2 matrix.  Column one is one solution, Column two is the other.
+            Utilize your axis limits to determine the correct solution for this case..
+            Returns two solutions, both are in degrees.  
+            [0,0] is rX solution 1 and [0,1] is rX solution 2
+            </summary>
+            
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.B">
+            <summary>
+            Returns a two element double array, where: <br/>
+            B[0] = B in terms of 360 axis <br/>
+            B[1] = B in terms of a +/- axis.
+            Calculates the Btp Based on the k vector.  Units are degrees.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.C">
+            <summary>
+            Returns a two element double array, where: <br/>
+            C[0] = C in terms of 360 axis <br/>
+            C[1] = C in terms of a +/- axis.
+            Calculates the Btp Based on the i vector.  Units are degrees.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.R">
+            <summary>
+            return one dimensional 3 element array representing R.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.cMatrix.vR">
+            <summary>
+            Same as R, but in Russ's cool vector class.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.Vector">
+            <summary>
+            Copied straight from Russ's vector class.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Vector.GetRxRy">
+            <summary>
+            Normalizes the vector.  
+            Returns rx and ry as if this is the K vector.
+            </summary>
+            <returns>array of two elements, rx and ry respectively in degrees</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Vector.IncludedAngle(Electroimpact.LinearAlgebra.Vector)">
+            <summary>
+            Returns the included angle between this vector and RayIn.  Absolute value in degrees.
+            </summary>
+            <param name="RayIn"></param>
+            <returns>Absolute Value in Degrees</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.Vector.SignedAngle2D(Electroimpact.LinearAlgebra.Vector)">
+            <summary>
+            returns signed angle in degrees, 2d only.  Uses j and k components
+            
+            </summary>
+            <param name="RayIn"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.DHMatrix">
+            <summary>
+            The Denavit-Hartenberg Matrix used in all of ToddR's kinematics derivations.
+            Please see Todd's Redbook for more information on this or "Robotic Engineering an Integrated Approach".
+            <br /><br />
+            Derivation of arguments for the DH matrix must follow the following procedure:<br />
+            1) Find Theta (rotation about Z)<br />
+            2) Find d (translate along Z)<br />
+            3) Find a (translate along X)<br />
+            4) Find Alpha (rotation about X)<br />
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.DHMatrix.getDH(Electroimpact.StringCalc.cStringCalc)">
+            <summary>
+            Returns properly formed Denavit - Hartenberg Matrix calculated from Theta, Alpha, a and d 
+            which is a 4x4 double array.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.string6DOF">
+            <summary>
+            The Denavit-Hartenberg Matrix used in all of ToddR's kinematics derivations.
+            Please see Todd's Redbook for more information on this or "Robotic Engineering an Integrated Approach".
+            <br /><br />
+            Derivation of arguments for the DH matrix must follow the following procedure:<br />
+            1) Find Theta (rotation about Z)<br />
+            2) Find d (translate along Z)<br />
+            3) Find a (translate along X)<br />
+            4) Find Alpha (rotation about X)<br />
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.string6DOF.getDH(Electroimpact.StringCalc.cStringCalc)">
+            <summary>
+            Returns properly formed Denavit - Hartenberg Matrix calculated from Theta, Alpha, a and d 
+            which is a 4x4 double array.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.RxMatrix">
+            <summary>
+            A matrix class describing a rotation of coordinates about X.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RxMatrix.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RxMatrix.#ctor(System.Double)">
+            <summary>
+            Specific Constructor.
+            </summary>
+            <param name="Phi">double rotation about X amount in Radians.</param>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RxMatrix.GetMatrix">
+            <summary>
+            returns the 4x4 matrix contained in this class.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RxMatrix.Phi">
+            <summary>
+            gets and sets the amount of rotation about axis.  This number should be in radians.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.RyMatrix">
+            <summary>
+            A matrix class describing a rotation of coordinates about Y.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RyMatrix.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RyMatrix.#ctor(System.Double)">
+            <summary>
+            Specific Constructor.
+            </summary>
+            <param name="Phi">double rotation about Y amount.</param>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RyMatrix.GetMatrix">
+            <summary>
+            returns the 4x4 matrix contained in this class.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RyMatrix.Phi">
+            <summary>
+            gets and sets the amount of rotation about axis
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.RzMatrix">
+            <summary>
+            A matrix class describing a rotation of coordinates about Z.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RzMatrix.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RzMatrix.#ctor(System.Double)">
+            <summary>
+            Specific Constructor.
+            </summary>
+            <param name="Phi">double rotation about Z in radians.</param>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RzMatrix.GetMatrix">
+            <summary>
+            returns the 4x4 matrix contained in this class.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RzMatrix.Phi">
+            <summary>
+            gets and sets the amount of rotation about axis
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RrMatrix.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.RrMatrix.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Translation Matrix Constructor
+            </summary>
+            <param name="X">double value representing translation along the X axis.</param>
+            <param name="Y">double value representing translation along the Y axis.</param>
+            <param name="Z">double value representing translation along the Z axis.</param>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RrMatrix.GetMatrix">
+            <summary>
+            returns the 4x4 matrix contained in this class.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RrMatrix.X">
+            <summary>
+            double value representing translation along the X axis.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RrMatrix.Y">
+            <summary>
+            double value representing translation along the Y axis.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.RrMatrix.Z">
+            <summary>
+            double value representing translation along the Z axis.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.c6dof">
+            <summary>
+            Displace linear, rotate about X, then Y then Z
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.#ctor">
+            <summary>
+            Base constructor
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.#ctor(Electroimpact.LinearAlgebra.c6dof)">
+            <summary>
+            Copy Constructor
+            </summary>
+            <param name="Input">c6dof class</param>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.GetMatrix(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Gets the matrix based on the arguments below.  Pass in radians please.
+            </summary>
+            <param name="X">linear distance</param>
+            <param name="Y">linear distance</param>
+            <param name="Z">linear distance</param>
+            <param name="rX">radians</param>
+            <param name="rY">radians</param>
+            <param name="rZ">radians</param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.GetMatrix">
+            <summary>
+            Returns a state matrix represending this transform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.GetOrientationMatrix">
+            <summary>
+            Returns only the roatation portion of the state matrix representing this transform
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.Copy(Electroimpact.LinearAlgebra.c6dof)">
+            <summary>
+            Copy function.  I haven't overrided =, == etc.  Too much work..use this.
+            </summary>
+            <param name="sixDOF"></param>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.Make6DoF(System.Double[0:,0:])">
+            <summary>
+            This function converts a 4x4 state matrix into the appropriate 6dof Euler matrix w/ rx,ry,rz rotations.
+            </summary>
+            <param name="StateMatrix">array, 4x4 double</param>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.InvertMe">
+            <summary>
+            Inverts this Euler Transform
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.Inverse">
+            <summary>
+            Returns the inverse of this Transform in the form of a 4x4 state matrix
+            </summary>
+            <returns>4x4 array of doubles</returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.DotMe(System.Double[])">
+            <summary>
+            Return Dot Product of this point
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof.DotMe(System.Double[0:,0:])">
+            <summary>
+            returns dot product of this transfrom with the following state matrix
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.c6dof.X">
+            <summary>
+            a double value
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.c6dof.Y">
+            <summary>
+            a double value
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.c6dof.Z">
+            <summary>
+            a double value
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.c6dof.rX">
+            <summary>
+            Sets or returns a value in radians
+            </summary>
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.c6dof.rY">
+            <summary>
+            Sets or returns a value in radians
+            </summary>      
+        </member>
+        <member name="P:Electroimpact.LinearAlgebra.c6dof.rZ">
+            <summary>
+            Sets or returns a value in radians
+            </summary>      
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof_robot.#ctor">
+            <summary>
+            Base constructor
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dof_robot.#ctor(Electroimpact.LinearAlgebra.c6dof)">
+            <summary>
+            Copy Constructor
+            </summary>
+            <param name="Input">c6dof class</param>
+        </member>
+        <member name="T:Electroimpact.LinearAlgebra.c6dofFixedAngle">
+            <summary>
+            rotate about X, Y, then Z then translate.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.LinearAlgebra.c6dofFixedAngle.GetMatrix(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Gets the matrix based on the arguments below.  Pass in radians please.
+            </summary>
+            <param name="X">linear distance</param>
+            <param name="Y">linear distance</param>
+            <param name="Z">linear distance</param>
+            <param name="rX">radians</param>
+            <param name="rY">radians</param>
+            <param name="rZ">radians</param>
+            <returns></returns>
+        </member>
+        <member name="T:Electroimpact.Machine.cAxis">
+            <summary>
+            An axis of a CNC or Robotic Machine and all the stuff I like to use to make it work right.
+            </summary>
+        </member>
+        <member name="M:Electroimpact.Machine.cAxis.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor requires a Name and to know if this axis is Rotary.
+            </summary>
+            <param name="Name">string Unique Axis name must match setup file</param>
+            <param name="Rotary">bool</param>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.Name">
+            <summary>
+            Defined in constructor, this is read only afterwards.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.ScaleFactor">
+            <summary>
+            double value.  The axis is position will be multiplied by this number when used in calculations.
+            <example>ScaleFactor = 1.006 <br/> 
+            base.value returns (this.myPos - Offset) * ScaleFactor</example>
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.Offset">
+            <summary>
+            double value.  The Offset will be subtracted from the axis position before multiplied by ScaleFactor when used in calculations.
+            <example>Offset = 100.0 <br/> 
+            base.value returns (this.myPos + Offset) * ScaleFactor</example>
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.Hidden">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.Position">
+            <summary>
+            If this is a rotary axis, the value must be in degrees!  This function returns a value in degrees.
+            Use the property "Value" if you want scaled, offsetted position in radians for caliculations.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.Value">
+            <summary>
+            Used in calculations not for display!!!!
+            <example>myArg = Value where value is base.myPos * base.ScaleFactor - base.Offset</example>
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cAxis.Rotary">
+            <summary>
+            true causes this axis to behave like a rotary axis.  This parameter can only be set in the constructor.
+            </summary>
+        </member>
+        <member name="T:Electroimpact.Machine.cMachine">
+            <summary>
+             An Electroimpact machine. 
+            </summary>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.#ctor(System.String,System.Boolean)">
+            <summary>
+            This class requires a setup file.  Please see example located somewhere.
+            </summary>
+            <param name="FileName">string representing a loc and filename e.g. c:\doggy\doggystyle.config</param>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.WriteAxisPosition(System.String,System.Double)">
+            <summary>
+            Modifies the Position.  This is the raw unscaled machine position of an axis in this machine.  
+            You must call DotProduct for this to take effect!  You should modify all axis positions before calling DotProduct.
+            </summary>
+            <param name="name">string Axis Name (eg Am)</param>
+            <param name="MachinePos">double position in either degrees or linear unit</param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.WriteAxisAttribute(System.String,System.String,System.Double)">
+            <summary>
+            Intended to be used with the solver tool...otherwise these are set during instantiation from the config file.
+            </summary>
+            <param name="axName">one of the axes specified in your config file</param>
+            <param name="attributeName">one of the attributes allowed: offset, scale1, scale2, scalefactor</param>
+            <param name="attributeValue">a double value.</param>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.ReadAxisAttribute(System.String,System.String)">
+            <summary>
+            Reads an axis type attribute
+            </summary>
+            <param name="axName">string -- the axis name</param>
+            <param name="attributeName">string -- the attribute to read</param>
+            <returns>double</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.ReadAttribute(System.String)">
+            <summary>
+            Reads a machine attribute, these are in the static variables section of the config file.
+            </summary>
+            <param name="AttribName">The name</param>
+            <returns>a double</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.WriteAttribute(System.String,System.Double)">
+            <summary>
+            Writes a machine attribute, these are in the static variables section of the config file.
+            </summary>
+            <param name="AttribName">string, the name</param>
+            <param name="Value">double, the value</param>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.GetAxisScaledPosition(System.String)">
+            <summary>
+            This is the scaled, offset and full fancy comp'd axis position.  Use for calculations only!
+            </summary>
+            <param name="axName"></param>
+            <returns>a double</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.DotProduct">
+            <summary>
+            Calculates this machine's transform
+            </summary>
+            <returns>retruns double[4,4] representation of dotproduct with these machine axis values.</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.DotProduct(System.UInt32,System.UInt32)">
+            <summary>
+            Returns a partial solution
+            </summary>
+            <param name="start">First transfrom to include in the solution (ONE BASED)</param>
+            <param name="finish">Last transform to include in the solution</param>
+            <returns>double[4,4] of the requested partial solution</returns>
+            <example>cMatrix m = new cMatrix(myMachine.DotProduct(0,1)) or <br/>
+            double[,] dog = myMachine.DotProduct(0,1)</example>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.ToFile(System.String,System.Boolean,System.String)">
+            <summary>
+            Writes a configuration file representing the current state of the machine.
+            </summary>
+            <param name="FileOut">string representing the filename you wish to use</param>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.GetAttributeNames">
+            <summary>
+            Gets all static variable names.  For use with the solver.  During solving, these "static" variables are manipulated
+            to match tracker data.
+            </summary>
+            <returns>a string array of static variable names</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.GetAxisNames">
+            <summary>
+            Returns a string array of this machine's axis names.
+            </summary>
+            <returns>string array</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.GetAxisNames(System.Boolean)">
+            <summary>
+            Returns a string array of this machine's axis names.
+            </summary>
+            <returns>string array</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.ContainsAxisAttribute(System.String,System.String)">
+            <summary>
+            Indicates if an axis and the desired attribute exists
+            </summary>
+            <param name="AxName">string One of the axis names in the machine.</param>
+            <param name="AttributeName">string An attribute name</param>
+            <returns>bool indicating if the axisname, attribute name combo exists in this machine.</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.OverrideCompTableValues(System.String,System.Double)">
+            <summary>
+            Puts a number in the ...
+            </summary>
+            <param name="CompTableVaiableName"></param>
+            <param name="value"></param>
+        </member>
+        <member name="P:Electroimpact.Machine.cMachine.IsHookedUp">
+            <summary>
+            Indicates if constructor appeared successful.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cMachine.A">
+            <summary>
+            two dimensional array of the A pos.
+            0 - returns 0 to 360.
+            1 - returns +/- 180.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cMachine.rXrYrZ">
+            <summary>
+            rXrYrz returns a 3 x 2 matrix.  Column one is one solution, Column two is the other.
+            Utilize your axis limits to determine the correct solution for this case.
+            this number is in degrees!  annoying!
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cMachine.rZrYrX">
+            <summary>
+            Standard robot notation.  Toolpoint rotated about Z then by rotated Y then rotated X
+            </summary>
+            
+        </member>
+        <member name="P:Electroimpact.Machine.cMachine.B">
+            <summary>
+            two dimensional array of the B pos.
+            0 - returns 0 to 360.
+            1 - returns +/- 180.
+            </summary>
+        </member>
+        <member name="P:Electroimpact.Machine.cMachine.C">
+            <summary>
+            two dimensional array of the C pos.
+            0 - returns 0 to 360.
+            1 - returns +/- 180.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Electroimpact.Machine.cMachine.DHStrings" -->
+        <member name="M:Electroimpact.Machine.cMachine.cVariableLocation.AssignVariablesToDHs(System.Collections.ArrayList,System.Boolean)">
+            <summary>
+            Once the entire machine config file is read, hand this class the VariableNames and the DHs derived from the file.
+            This function will assignblame to the appropriate DHs.  Later, when changing a variables value, call MarkVairable to 
+            cause the DH to update the appropriate arguments and matrix.
+            </summary>
+            <param name="DHs"></param>
+        </member>
+        <member name="M:Electroimpact.Machine.cMachine.cVariableLocation.MarkVariable(System.String,System.Collections.ArrayList)">
+            <summary>
+            Markes the appropriate DH as needs recalc
+            </summary>
+            <param name="Variable">A variable name</param>
+            <param name="DHs">Array list of DH matrix classes for the machine you are working on.</param>
+        </member>
+        <member name="M:Electroimpact.Machine.cCompTable.AddTable(System.Xml.XmlNodeReader)">
+            <summary>
+            Returns an ArrayList of strings comprised of the variable names added.
+            </summary>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cCompTable.GetCompVariables(System.String,System.Double)">
+            <summary>
+            Used to return the linear interpolated values of X,Y,Z,Roll,Pitch,Yaw of the comptable for the specified axis at the specified location.
+            </summary>
+            <param name="axisname">string...the axis name</param>
+            <param name="axisposition">double the axis' position</param>
+            <returns>Hashtable with key of l(axisname)x (y and z) and r(axisname)r (p and y)</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cCompTable.GetCompensationTableStationCount(System.String)">
+            <summary>
+            Returns the number of cCompStations in the comptable for this AxisName.
+            </summary>
+            <param name="AxisName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cCompTable.GetCompensationTable(System.String)">
+            <summary>
+            Used in Solver only!
+            </summary>
+            <param name="AxisName">string The axis name</param>
+            <returns>System.Collections.ArrayList of cCompStations</returns>
+        </member>
+        <member name="M:Electroimpact.Machine.cCompTable.PutCompensationTable(System.String,System.Collections.Generic.List{Electroimpact.Machine.cCompTable.cCompStation})">
+            <summary>
+            Only a solver funtion.
+            </summary>
+            <param name="AxisName">string</param>
+            <param name="table">a System.Collections.ArrayList of cCompStation (s). used to modify the axis comp from solver.</param>
+        </member>
+        <member name="T:Electroimpact.Machine.cRobot">
+            <summary>
+            Things to do:
+            
+            1) PayloadCalc needs to be passed parameters from setup file.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,6 @@
+C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\bin\x86\Release\IMachine.cs
+C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\bin\x86\Release\LinearAlgebra.dll
+C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\bin\x86\Release\LinearAlgebra.pdb
+C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\bin\x86\Release\ClassStringCalc.dll
+C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\obj\x86\Release\LinearAlgebra.dll
+C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\obj\x86\Release\LinearAlgebra.pdb
