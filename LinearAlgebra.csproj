@@ -72,9 +72,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClassStringCalc, Version=1.0.5452.16454, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ClassStringCalc, Version=1.0.4841.27004, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ClassStringCalc.dll</HintPath>
+      <HintPath>..\SolverApp\DLLs\ClassStringCalc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
