@@ -45,3 +45,12 @@ C:\Users\toddr.EI\OneDrive\Projects\dotNetSolutions\LinearAlgebra\obj\Release\Li
 C:\Users\toddr\OneDrive\Projects\dotNetSolutions\LinearAlgebra\obj\Release\LinearAlgebra.csproj.CoreCompileInputs.cache
 C:\Users\toddr\OneDrive\Projects\dotNetSolutions\LinearAlgebra\obj\Release\LinearAlgebra.csproj.CopyComplete
 C:\Users\toddr\OneDrive\Projects\dotNetSolutions\LinearAlgebra\obj\Release\LinearAlgebra.csproj.AssemblyReference.cache
+E:\LocalDev\LinearAlgebra\bin\Release\IMachine.cs
+E:\LocalDev\LinearAlgebra\bin\Release\LinearAlgebra.dll
+E:\LocalDev\LinearAlgebra\bin\Release\ClassStringCalc.dll
+E:\LocalDev\LinearAlgebra\obj\Release\LinearAlgebra.csproj.AssemblyReference.cache
+E:\LocalDev\LinearAlgebra\obj\Release\LinearAlgebra.csproj.CoreCompileInputs.cache
+E:\LocalDev\LinearAlgebra\obj\Release\LinearAl.97A4EC9D.Up2Date
+E:\LocalDev\LinearAlgebra\obj\Release\LinearAlgebra.dll
+E:\LocalDev\LinearAlgebra\obj\Release\LinearAlgebra.pdb
+E:\LocalDev\LinearAlgebra\bin\Release\LinearAlgebra.pdb

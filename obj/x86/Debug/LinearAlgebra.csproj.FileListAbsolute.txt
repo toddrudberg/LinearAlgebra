@@ -1,0 +1,10 @@
+E:\LocalDev\LinearAlgebra\bin\x86\Debug\IMachine.cs
+E:\LocalDev\LinearAlgebra\bin\x86\Debug\LinearAlgebra.dll
+E:\LocalDev\LinearAlgebra\bin\x86\Debug\LinearAlgebra.pdb
+E:\LocalDev\LinearAlgebra\bin\x86\Debug\LinearAlgebra.XML
+E:\LocalDev\LinearAlgebra\bin\x86\Debug\ClassStringCalc.dll
+E:\LocalDev\LinearAlgebra\obj\x86\Debug\LinearAlgebra.csproj.AssemblyReference.cache
+E:\LocalDev\LinearAlgebra\obj\x86\Debug\LinearAlgebra.csproj.CoreCompileInputs.cache
+E:\LocalDev\LinearAlgebra\obj\x86\Debug\LinearAl.97A4EC9D.Up2Date
+E:\LocalDev\LinearAlgebra\obj\x86\Debug\LinearAlgebra.dll
+E:\LocalDev\LinearAlgebra\obj\x86\Debug\LinearAlgebra.pdb

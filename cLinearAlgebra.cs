@@ -15,13 +15,70 @@ namespace Electroimpact
 
     public static class ExtensionMethods
     {
+      /// <summary>
+      /// Converts an angle from degrees to radians.
+      /// </summary>
+      /// <param name="Degrees">The angle in degrees.</param>
+      /// <returns>The angle in radians.</returns>
       public static double DegreesToRadians(this double Degrees)
       {
-        return (Degrees * Math.PI / 180.0);
+          return (Degrees * Math.PI / 180.0);
       }
+
+      /// <summary>
+      /// Converts an angle from radians to degrees.
+      /// </summary>
+      /// <param name="Radians">The angle in radians.</param>
+      /// <returns>The angle in degrees.</returns>
       public static double RadiansToDegrees(this double Radians)
       {
-        return (Radians * 180.0 / Math.PI);
+          return (Radians * 180.0 / Math.PI);
+      }
+
+      /// <summary>
+      /// Converts an angle from degrees to radians.
+      /// </summary>
+      /// <param name="Degrees">The angle in degrees.</param>
+      /// <returns>The angle in radians.</returns>
+      public static double D2R(this double Degrees)
+      {
+          return (Degrees * Math.PI / 180.0);
+      }
+
+      /// <summary>
+      /// Converts an angle from radians to degrees.
+      /// </summary>
+      /// <param name="Radians">The angle in radians.</param>
+      /// <returns>The angle in degrees.</returns>
+      public static double R2D(this double Radians)
+      {
+          return (Radians * 180.0 / Math.PI);
+      }
+
+      /// <summary>
+      /// Converts an angle to a value between 0 and 360 degrees.
+      /// </summary>
+      /// <param name="input">The angle in degrees.</param>
+      /// <returns>The angle in degrees, normalized to the range 0 to 360.</returns>
+      public static double zeroto360(this double input)
+      {
+        double input_1 = m180p180(input);
+        if (input_1 < 0.0)
+          input_1 += 360.0;
+        return input_1;
+      }
+
+      /// <summary>
+      /// Converts an angle to a value between -180 and 180 degrees.
+      /// </summary>
+      /// <param name="input">The angle in degrees.</param>
+      /// <returns>The angle in degrees, normalized to the range -180 to 180.</returns>
+      public static double m180p180(this double input)
+      {
+        double d2r = Math.PI / 180.0;
+        double sini = Math.Sin(d2r * input);
+        double cosi = Math.Cos(d2r * input);
+        return Math.Atan2(sini, cosi) / d2r;
       }
 
       /// <summary>
@@ -4390,31 +4447,61 @@ namespace Electroimpact
                 {//process a kinematic variable.
                   string name = r.Name;
 
-                  if (name == "ToolPointOffset")//we shall slowly irradicate this silly thing.
+                  if (name == "PartXform")
                   {
                     value = r.GetAttribute("X");
-                    //this.myCalculator._AssignVariable("ToolPointOffset_X", this.myCalculator.SimpleCalc(value));
-                    this.myVariableToDH_Hash.Add("BaseShift_X");
-                    myCalculator._AssignVariable("BaseShift_X", this.myCalculator.SimpleCalc(value));
+                    myCalculator._AssignVariable("PartXform_X", this.myCalculator.SimpleCalc(value));
+                    if (!this.myStaticVarNames.Contains("PartXform_X"))
+                    {
+                      this.myStaticVarNames.Add("PartXform_X");
+                      this.myVariableToDH_Hash.Add("PartXform_X");
+                    }
 
                     value = r.GetAttribute("Y");
-                    //this.myCalculator._AssignVariable("ToolPointOffset_Y", this.myCalculator.SimpleCalc(value));
-                    this.myVariableToDH_Hash.Add("BaseShift_Y");
-                    this.myCalculator._AssignVariable("BaseShift_Y", this.myCalculator.SimpleCalc(value));
+                    this.myCalculator._AssignVariable("PartXform_Y", this.myCalculator.SimpleCalc(value));
+                    if (!this.myStaticVarNames.Contains("PartXform_Y"))
+                    {
+                      this.myStaticVarNames.Add("PartXform_Y");
+                      this.myVariableToDH_Hash.Add("PartXform_Y");
+                    }
 
                     value = r.GetAttribute("Z");
-                    //this.myCalculator._AssignVariable("ToolPointOffset_Z", this.myCalculator.SimpleCalc(value));
-                    this.myVariableToDH_Hash.Add("BaseShift_Z");
-                    this.myCalculator._AssignVariable("BaseShift_Z", this.myCalculator.SimpleCalc(value));
+                    this.myCalculator._AssignVariable("PartXform_Z", this.myCalculator.SimpleCalc(value));
+                    if (!this.myStaticVarNames.Contains("PartXform_Z"))
+                    {
+                      this.myStaticVarNames.Add("PartXform_Z");
+                      this.myVariableToDH_Hash.Add("PartXform_Z");
+                    }
+                    value = r.GetAttribute("rX");
+                    this.myCalculator._AssignVariable("PartXform_rX", this.myCalculator.SimpleCalc(value));
+                    if (!this.myStaticVarNames.Contains("PartXform_rX"))
+                    {
+                      this.myStaticVarNames.Add("PartXform_rX");
+                      this.myVariableToDH_Hash.Add("PartXform_rX");
+                    }
 
-                    this.myVariableToDH_Hash.Add("BaseShift_rX");
-                    this.myCalculator._AssignVariable("BaseShift_rX", 0.0);
+                    value = r.GetAttribute("rY");
+                    this.myCalculator._AssignVariable("PartXform_rY", this.myCalculator.SimpleCalc(value));
+                    if (!this.myStaticVarNames.Contains("PartXform_rY"))
+                    {
+                      this.myStaticVarNames.Add("PartXform_rY");
+                      this.myVariableToDH_Hash.Add("PartXform_rY");
+                    }
 
-                    this.myVariableToDH_Hash.Add("BaseShift_rY");
-                    this.myCalculator._AssignVariable("BaseShift_rY", 0.0);
-
-                    this.myVariableToDH_Hash.Add("BaseShift_rZ");
-                    this.myCalculator._AssignVariable("BaseShift_rZ", 0.0);
+                    value = r.GetAttribute("rZ");
+                    this.myCalculator._AssignVariable("PartXform_rZ", this.myCalculator.SimpleCalc(value));
+                    if (!this.myStaticVarNames.Contains("PartXform_rZ"))
+                    {
+                      this.myStaticVarNames.Add("PartXform_rZ");
+                      this.myVariableToDH_Hash.Add("PartXform_rZ");
+                    }
+                    string note = r.GetAttribute("note");
+                    if (note == null)
+                    {
+                      note = r.GetAttribute("Note");
+                    }
+                    if (note != null)
+                      this.myCalculator._AssignVariableNote(name, note);
                   }
                   else if (name == "BaseShift")
                   {
@@ -4464,10 +4551,13 @@ namespace Electroimpact
                       this.myStaticVarNames.Add("BaseShift_rZ");
                       this.myVariableToDH_Hash.Add("BaseShift_rZ");
                     }
-
-                    //this.myStaticVarNames.Add(name);
-                    //this.myVariableToDH_Hash.Add(name);
-
+                    string note = r.GetAttribute("note");
+                    if (note == null)
+                    {
+                      note = r.GetAttribute("Note");
+                    }
+                    if (note != null)
+                      this.myCalculator._AssignVariableNote(name, note);
                   }
                   else if (name.ToLower() == "_debug")
                   {
@@ -4750,11 +4840,11 @@ namespace Electroimpact
 
         for (int ii = 0; ii < this.myStaticVarNames.Count; ii++)
         {
-          if (((string)myStaticVarNames[ii]).StartsWith("BaseShift"))
+          if (((string)myStaticVarNames[ii]).StartsWith("BaseShift") || ((string)myStaticVarNames[ii]).StartsWith("PartXform"))
             continue;
           xw.WriteStartElement(this.myStaticVarNames[ii].ToString());
           xw.WriteAttributeString("value", this.myCalculator._GetVariable((string)this.myStaticVarNames[ii]).ToString("F4"));
-          ExtractNote(xw, ii, (string)this.myStaticVarNames[ii]);
+          ExtractNote(xw, (string)this.myStaticVarNames[ii]);
           xw.WriteEndElement();
         }
         xw.WriteStartElement("BaseShift");
@@ -4772,22 +4862,49 @@ namespace Electroimpact
           xw.WriteAttributeString("rY", value);
           value = this.myCalculator._GetVariable("BaseShift_rZ").ToString("F4");
           xw.WriteAttributeString("rZ", value);
+          ExtractNote(xw, "BaseShift");
+          //xw.WriteEndElement();
           //}
 
         }
         xw.WriteEndElement();
+
+        xw.WriteStartElement("PartXform");
+        {
+          string value;
+          value = this.myCalculator._GetVariable("PartXform_X").ToString("F4");
+          xw.WriteAttributeString("X", value);
+          value = this.myCalculator._GetVariable("PartXform_Y").ToString("F4");
+          xw.WriteAttributeString("Y", value);
+          value = this.myCalculator._GetVariable("PartXform_Z").ToString("F4");
+          xw.WriteAttributeString("Z", value);
+          value = this.myCalculator._GetVariable("PartXform_rX").ToString("F4");
+          xw.WriteAttributeString("rX", value);
+          value = this.myCalculator._GetVariable("PartXform_rY").ToString("F4");
+          xw.WriteAttributeString("rY", value);
+          value = this.myCalculator._GetVariable("PartXform_rZ").ToString("F4");
+          xw.WriteAttributeString("rZ", value);
+          ExtractNote(xw, "PartXform");
+          //xw.WriteEndElement();
+          //}
+
+        }
+        xw.WriteEndElement();
+
+
+
         for (int ii = 0; ii < this.myOtherStaticVarNames.Count; ii++)
         {
           xw.WriteStartElement(this.myOtherStaticVarNames[ii].ToString());
           xw.WriteAttributeString("value", this.myCalculator._GetVariable((string)this.myOtherStaticVarNames[ii]).ToString("F4"));
-          ExtractNote(xw, ii, this.myOtherStaticVarNames[ii]);
+          ExtractNote(xw, this.myOtherStaticVarNames[ii]);
           if (this.myOtherStaticVarNames[ii].ToString().IndexOf("_") != 0)
             xw.WriteAttributeString("Hide", "true");
           xw.WriteEndElement();
         }
       }
 
-      private void ExtractNote(XmlTextWriter xw, int ii, string varname)
+      private void ExtractNote(XmlTextWriter xw, string varname)
       {
         string note = this.myCalculator._GetVariableNote(varname);
         if (note != null)
@@ -5379,7 +5496,7 @@ namespace Electroimpact
                     string[] vars = GetAttributeNames();
                     foreach (string var in vars)
                     {
-                      if (var.StartsWith("BaseShift"))
+                      if (var.StartsWith("BaseShift") || var.StartsWith("PartXform"))
                         continue;
 
 
@@ -5410,6 +5527,31 @@ namespace Electroimpact
                       value = this.myCalculator._GetVariable("BaseShift_rY").ToString("F4");
                       x.WriteAttributeString("rY", value);
                       value = this.myCalculator._GetVariable("BaseShift_rZ").ToString("F4");
+                      x.WriteAttributeString("rZ", value);
+
+                      x.WriteEndElement();
+
+                    }
+
+                    //static variables, BaseShift
+                    if (r.Name.StartsWith("PartXform"))
+                    {
+                      //continue;
+                      x.WriteStartElement("PartXform");
+
+
+                      string value;
+                      value = this.myCalculator._GetVariable("PartXform_X").ToString("F4");
+                      x.WriteAttributeString("X", value);
+                      value = this.myCalculator._GetVariable("PartXform_Y").ToString("F4");
+                      x.WriteAttributeString("Y", value);
+                      value = this.myCalculator._GetVariable("PartXform_Z").ToString("F4");
+                      x.WriteAttributeString("Z", value);
+                      value = this.myCalculator._GetVariable("PartXform_rX").ToString("F4");
+                      x.WriteAttributeString("rX", value);
+                      value = this.myCalculator._GetVariable("PartXform_rY").ToString("F4");
+                      x.WriteAttributeString("rY", value);
+                      value = this.myCalculator._GetVariable("PartXform_rZ").ToString("F4");
                       x.WriteAttributeString("rZ", value);
 
                       x.WriteEndElement();
